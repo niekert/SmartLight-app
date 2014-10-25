@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import krusemost.smartlight.services.ReloadLampsTask;
+
 
 public class HomeActivity extends Activity {
 
@@ -14,6 +16,13 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ReloadLampsTask reloadLampsTask = new ReloadLampsTask(this);
+        reloadLampsTask.execute();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
