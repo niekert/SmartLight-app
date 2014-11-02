@@ -17,7 +17,7 @@ public class Utilities {
 
         int hoursCount = minutesCount / 60;
 
-        return "" + twoDigitString(hoursCount) + ":" + twoDigitString(seconds);
+        return "" + twoDigitString(hoursCount) + ":" + twoDigitString(minutes);
     }
 
     public static String twoDigitString(int number) {

@@ -24,4 +24,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/gson-2.3.jar')
     compile files('libs/gson-2.3-javadoc.jar')
+    compile 'com.google.android.gms:play-services:6.1.+'
+    compile 'info.hoang8f:android-segmented:1.0.2'
+
 }

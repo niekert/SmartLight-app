@@ -2,6 +2,7 @@ package krusemost.smartlight.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,13 @@ public class LampListAdapter extends ArrayAdapter<Lamp> {
         switchLampState.setTag(position);
         switchLampState.setOnCheckedChangeListener(switchChangedListener);
 
+        if(lamp.getLampState() == LampState.OFF)
+        {
+            switchLampState.setChecked(false);
+        } else {
+            switchLampState.setChecked(true);
+        }
+
 
         lampName.setText(lamp.getName());
         lampTimeLock.setText(lamp.isHasTimeLock() ? lamp.getFriendlyTime() : "");
@@ -65,29 +73,34 @@ public class LampListAdapter extends ArrayAdapter<Lamp> {
         return returnView;
     }
 
+    public Lamp getItem(int position)
+    {
+        return lampList.get(position);
+    }
+
     private CompoundButton.OnCheckedChangeListener switchChangedListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(final CompoundButton buttonView, boolean isChecked) {
-            int position = (Integer) buttonView.getTag();
+            if (buttonView.isPressed()) {
+                int position = (Integer) buttonView.getTag();
 
-            Lamp lamp = Session.getLoadedLamps().get(position);
-            final List<LampIDState> lampsToUpdate = new ArrayList<LampIDState>();
-            final List<CompoundButton> switchesToUpdate = new ArrayList<CompoundButton>();
-            if(lamp != null)
-            {
-                LampState newState;
-                if(isChecked)
-                {
-                    newState = LampState.ON;
-                } else {
-                    newState = LampState.OFF;
+                Lamp lamp = Session.getLoadedLamps().get(position);
+                final List<LampIDState> lampsToUpdate = new ArrayList<LampIDState>();
+                final List<CompoundButton> switchesToUpdate = new ArrayList<CompoundButton>();
+                if (lamp != null) {
+                    LampState newState;
+                    if (isChecked) {
+                        newState = LampState.ON;
+                    } else {
+                        newState = LampState.OFF;
+                    }
+
+                    lampsToUpdate.add(new LampIDState(lamp.getLampId(), newState));
+                    switchesToUpdate.add(buttonView);
+
+                    ToggleLampStatesTask toggleTask = new ToggleLampStatesTask(switchesToUpdate, lampsToUpdate);
+                    toggleTask.execute();
                 }
-
-                lampsToUpdate.add(new LampIDState(lamp.getLampId(), newState));
-                switchesToUpdate.add(buttonView);
-
-                ToggleLampStatesTask toggleTask = new ToggleLampStatesTask(buttonView, switchesToUpdate, lampsToUpdate);
-                toggleTask.execute();
             }
         }
     };

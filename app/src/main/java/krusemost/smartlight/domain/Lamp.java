@@ -24,6 +24,8 @@ public class Lamp {
     private int turnOnSeconds;
     @SerializedName("TurnOffSeconds")
     private int turnOffSeconds;
+    @SerializedName("TurnOnInRange")
+    private boolean turnOnInRange;
 
     public LampState getLampState() {
         return lampState;
@@ -72,6 +74,15 @@ public class Lamp {
     public void setTurnOffSeconds(int turnOffSeconds) {
         this.turnOffSeconds = turnOffSeconds;
     }
+
+    public boolean isTurnOnInRange() {
+        return turnOnInRange;
+    }
+
+    public void setTurnOnInRange(boolean turnOnInRange) {
+        this.turnOnInRange = turnOnInRange;
+    }
+
 
     public String getFriendlyTime()
     {

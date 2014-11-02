@@ -1,0 +1,170 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    style="@style/gradientBackground"
+    tools:context="krusemost.smartlight.LampDetails">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/detailsInclude"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/listitem_lamp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            style="@style/horizontalLine">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            style="@style/formLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/textAppearanceMedium"
+                android:labelFor="@+id/txtName"
+                android:text="Name" />
+
+
+            <EditText
+                android:id="@+id/txtName"
+                android:inputType="text"
+                android:layout_marginStart="10dp"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            style="@style/formLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/textAppearanceMedium"
+                android:text="@string/TurnOnNearHome" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:orientation="vertical"
+                android:paddingStart="0dp"
+                android:paddingEnd="5dp">
+
+                <Switch
+                    android:id="@+id/turnOnAtHome"
+                    android:layout_width="wrap_content"
+                    style="@style/lampSwitch"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:gravity="end" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            style="@style/formLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/textAppearanceMedium"
+                android:text="@string/TurnOnTimelock" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:orientation="vertical"
+                android:paddingStart="0dp"
+                android:paddingEnd="5dp">
+
+                <Switch
+                    android:id="@+id/enableTimeLock"
+                    android:layout_width="wrap_content"
+                    style="@style/lampSwitch"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:gravity="end" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timeLockSettings"
+            android:orientation="vertical"
+            android:visibility="gone"
+            style="@style/formLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <info.hoang8f.android.segmented.SegmentedGroup
+                android:id="@+id/segmented2"
+                android:layout_gravity="center"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:weightSum="1.0"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/buttonStart"
+                    android:layout_weight=".5"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:text="Start"
+                    style="@style/RadioButton" />
+
+                <RadioButton
+                    android:id="@+id/buttonEnd"
+                    android:layout_weight=".5"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:text="End"
+                    style="@style/RadioButton" />
+            </info.hoang8f.android.segmented.SegmentedGroup>
+
+
+            <TimePicker
+                android:id="@+id/startTimePicker"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TimePicker
+                android:visibility="gone"
+                android:id="@+id/endTimePicker"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

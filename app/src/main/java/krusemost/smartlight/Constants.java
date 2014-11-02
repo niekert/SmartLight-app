@@ -7,5 +7,5 @@ package krusemost.smartlight;
  */
 public class Constants {
     //This is only temporary
-    public static final String WebserviceBase = "http://192.168.192.23/SmartLight/";
+    public static final String WebserviceBase = "http://192.168.1.192//SmartLight/";
 }

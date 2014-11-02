@@ -43,14 +43,12 @@ import krusemost.smartlight.utils.LampStateSerializer;
 public class ToggleLampStatesTask extends AsyncTask<Void, Void, List<LampIDState>> {
     private List<CompoundButton> switchesToUpdate;
     private List<LampIDState> lampsToUpdate;
-    private View context;
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
     private Exception lastException;
 
-    public ToggleLampStatesTask(View context, List<CompoundButton> switchesToUpdate, List<LampIDState> lampsToUpdate) {
+    public ToggleLampStatesTask(List<CompoundButton> switchesToUpdate, List<LampIDState> lampsToUpdate) {
         this.switchesToUpdate = switchesToUpdate;
-        this.context = context;
         this.lampsToUpdate = lampsToUpdate;
     }
 
@@ -102,36 +100,39 @@ public class ToggleLampStatesTask extends AsyncTask<Void, Void, List<LampIDState
         return null;
     }
 
+
+
     @Override
     protected void onPostExecute(List<LampIDState> lampIDStates) {
-        if(this.lastException == null && this.lampsToUpdate.size() == lampIDStates.size()) {
-            for (CompoundButton aSwitch : this.switchesToUpdate) {
-                int position = (Integer) aSwitch.getTag();
+        if(this.switchesToUpdate != null) {
+            if (this.lastException == null && this.lampsToUpdate.size() == lampIDStates.size()) {
+                for (CompoundButton aSwitch : this.switchesToUpdate) {
+                    int position = (Integer) aSwitch.getTag();
 
-                Lamp lamp = Session.getLoadedLamps().get(position);
+                    Lamp lamp = Session.getLoadedLamps().get(position);
 
-                LampIDState foundState = null;
-                for (LampIDState lampIDState : lampIDStates) {
-                    if (lampIDState.getLampID().equals(lamp.getLampId())) {
-                        foundState = lampIDState;
-                        break;
+                    LampIDState foundState = null;
+                    for (LampIDState lampIDState : lampIDStates) {
+                        if (lampIDState.getLampID().equals(lamp.getLampId())) {
+                            foundState = lampIDState;
+                            break;
+                        }
+                    }
+
+                    if (foundState != null) {
+                        boolean isChecked = foundState.getLampState() == LampState.ON;
+                        lamp.setLampState(foundState.getLampState());
+                        aSwitch.setChecked(isChecked);
                     }
                 }
-
-                if (foundState != null) {
-                    boolean isChecked = foundState.getLampState() == LampState.ON;
-                    aSwitch.setChecked(isChecked);
-                }
-            }
-        } else {
-            for(CompoundButton aSwitch : this.switchesToUpdate)
-            {
-                aSwitch.setChecked(!aSwitch.isChecked());
-                if(this.lastException != null) {
-                    //TODO: Show the message that an error occured.
+            } else {
+                for (CompoundButton aSwitch : this.switchesToUpdate) {
+                    aSwitch.setChecked(!aSwitch.isChecked());
+                    if (this.lastException != null) {
+                        //TODO: Show the message that an error occured.
+                    }
                 }
             }
         }
-
     }
 }
